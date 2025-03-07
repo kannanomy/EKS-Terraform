@@ -18,7 +18,7 @@ resource "aws_subnet" "devopsshack_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "devopsshack-subnet-${count.index}"
+    Name = "kannan65629-subnet-${count.index}"
   }
 }
 
@@ -26,7 +26,7 @@ resource "aws_internet_gateway" "devopsshack_igw" {
   vpc_id = aws_vpc.devopsshack_vpc.id
 
   tags = {
-    Name = "devopsshack-igw"
+    Name = "kannan65629-igw"
   }
 }
 
@@ -87,8 +87,8 @@ resource "aws_security_group" "devopsshack_node_sg" {
 }
 
 resource "aws_eks_cluster" "devopsshack" {
-  name     = "devopsshack-cluster"
-  role_arn = aws_iam_role.devopsshack_cluster_role.arn
+  name     = "kannan65629-cluster"
+  role_arn = aws_iam_role.kannan65629_cluster_role.arn
 
   vpc_config {
     subnet_ids         = aws_subnet.devopsshack_subnet[*].id
@@ -117,7 +117,7 @@ resource "aws_eks_node_group" "devopsshack" {
 }
 
 resource "aws_iam_role" "devopsshack_cluster_role" {
-  name = "devopsshack-cluster-role"
+  name = "kannan65629-cluster-role"
 
   assume_role_policy = <<EOF
 {
@@ -135,13 +135,13 @@ resource "aws_iam_role" "devopsshack_cluster_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_cluster_role_policy" {
-  role       = aws_iam_role.devopsshack_cluster_role.name
+resource "aws_iam_role_policy_attachment" "kannan65629_cluster_role_policy" {
+  role       = aws_iam_role.kannan65629_cluster_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
-resource "aws_iam_role" "devopsshack_node_group_role" {
-  name = "devopsshack-node-group-role"
+resource "aws_iam_role" "kannan65629_node_group_role" {
+  name = "kannan65629-node-group-role"
 
   assume_role_policy = <<EOF
 {
@@ -159,17 +159,17 @@ resource "aws_iam_role" "devopsshack_node_group_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_role_policy" {
-  role       = aws_iam_role.devopsshack_node_group_role.name
+resource "aws_iam_role_policy_attachment" "kannan65629_node_group_role_policy" {
+  role       = aws_iam_role.kannan65629_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_cni_policy" {
-  role       = aws_iam_role.devopsshack_node_group_role.name
+resource "aws_iam_role_policy_attachment" "kannan65629_node_group_cni_policy" {
+  role       = aws_iam_role.kannan65629_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
 }
 
-resource "aws_iam_role_policy_attachment" "devopsshack_node_group_registry_policy" {
+resource "aws_iam_role_policy_attachment" "kannan65629_node_group_registry_policy" {
   role       = aws_iam_role.devopsshack_node_group_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
